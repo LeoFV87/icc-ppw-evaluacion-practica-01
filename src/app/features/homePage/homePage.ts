@@ -26,12 +26,13 @@ export class HomePage {
       limit: this.limit
     }),
 
-    loader: (params: { offset: any; limit: any; }) => {
-      const { offset, limit } = params;
-      const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
-      return this.http.get<any>(url);
-    }
-  });
+     stream: ({ params }) => {
+        // Desestructuramos 'offset' y 'limit' del objeto 'params'
+        const { offset, limit } = params;
+        const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
+        return this.http.get<any>(url);
+      }
+   });
 
   // Navegar al detalle
   verDetalles(url: string) {
