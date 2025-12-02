@@ -15,32 +15,31 @@ export class HomePage {
   private http = inject(HttpClient);
   private router = inject(Router);
 
-  // Paginación
+  // Señales de paginación
   offset = signal(0);
   limit = 20;
 
-  // rxResource CORRECTO
+  // rxResource correcto
   pokemonResource = rxResource({
-    // params devuelven un objeto con offset y limit
     params: () => ({
       offset: this.offset(),
       limit: this.limit
     }),
 
-    // loader recibe un objeto { request } que contiene los params
-    loader: ({ request }) => {
-      const { offset, limit } = request;
+    loader: (params: { offset: any; limit: any; }) => {
+      const { offset, limit } = params;
       const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
       return this.http.get<any>(url);
     }
   });
 
-  // Navegar a detalles
+  // Navegar al detalle
   verDetalles(url: string) {
     const id = url.split('/').slice(-2)[0];
     this.router.navigate(['/pokemon', id]);
   }
 
+  // Paginación
   nextPage() {
     this.offset.update(o => o + this.limit);
   }
