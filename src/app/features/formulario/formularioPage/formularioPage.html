@@ -57,6 +57,11 @@
         Ingresar
       </button>
 
+      @if (errorMessage) {
+  <p class="text-red-500 text-sm mt-3">{{ errorMessage }}</p>
+}
+
+
     </form>
 
   </div>
