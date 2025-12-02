@@ -1,0 +1,63 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="w-full max-w-md bg-white shadow-lg rounded-xl p-8">
+
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
+      Login
+    </h2>
+
+    <form 
+      autocomplete="off"
+      [formGroup]="myForm"
+      (ngSubmit)="onSubmit()"
+      class="space-y-5"
+    >
+
+      <!-- Campo: Correo -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Correo</label>
+        
+        <input
+          type="text"
+          formControlName="correo"
+          placeholder="Correo del usuario"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+
+        @if (formUtils.isValidField(myForm,'correo')) {
+          <p class="text-red-500 text-sm mt-1">
+            {{ formUtils.getFieldError(myForm,'correo') }}
+          </p>
+        }
+      </div>
+
+
+      <!-- Campo: Contraseña -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Contraseña</label>
+
+        <input
+          type="password"
+          formControlName="contrasenia"
+          placeholder="Contraseña del usuario"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+
+        @if (formUtils.isValidField(myForm, 'contrasenia')) {
+          <p class="text-red-500 text-sm mt-1">
+            {{ formUtils.getFieldError(myForm,'contrasenia') }}
+          </p>
+        }
+      </div>
+
+      <!-- Botón -->
+      <button 
+        type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
+      >
+        Ingresar
+      </button>
+
+    </form>
+
+  </div>
+</div>
