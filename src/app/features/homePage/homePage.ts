@@ -2,13 +2,13 @@ import { Component, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
-import { NgFor, NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink],
-  templateUrl: './homepage.html'
+  imports: [ RouterLink],
+  templateUrl: './homePage.html'
 })
 export class HomePage {
 

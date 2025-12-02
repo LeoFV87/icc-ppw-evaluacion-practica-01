@@ -4,37 +4,40 @@
   <header class="text-center mb-10">
     <h1 class="text-4xl font-bold text-gray-800 mb-2">Pokédex</h1>
 
-    @if (pokemonResource.value()) {
+    @if (pokemonResource.value(); as data) {
       <p class="text-gray-600 text-lg">
-        Total de Pokémon registrados: 
-        <span class="font-semibold">{{ pokemonResource.value().count }}</span>
+        Total de Pokémon registrados:
+        <span class="font-semibold">{{ data.count }}</span>
       </p>
     }
   </header>
 
 
   <!-- LOADING -->
-  @if (pokemonResource.loading()) {
-    <p class="text-center text-gray-600 text-lg">Cargando pokémon...</p>
+  @if (pokemonResource.isLoading()) {
+    <div class="flex justify-center my-4">
+        <p class="text-center text-gray-600 text-lg animate-pulse">Cargando pokémon...</p>
+    </div>
   }
 
   <!-- LISTADO -->
-  @if (pokemonResource.value()) {
+  @if (pokemonResource.value(); as data) {
 
     <section class="max-w-4xl mx-auto">
 
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-        @for (poke of pokemonResource.value().results; track poke.name) {
+        <!-- Ahora usamos 'data.results' -->
+        @for (poke of data.results; track poke.name) {
 
           <li>
             <article class="bg-white shadow rounded-lg p-4 flex justify-between items-center">
-              
+
               <h2 class="text-xl font-semibold capitalize text-gray-800">
                 {{ poke.name }}
               </h2>
 
-              <button 
+              <button
                 class="bg-blue-600 text-white px-4 py-1 rounded-lg hover:bg-blue-700 transition"
                 (click)="verDetalles(poke.url)">
                 Ver detalles
@@ -46,25 +49,25 @@
         }
       </ul>
     </section>
+
+    <!-- CONTROLES DE PÁGINA (Movidos dentro del if para usar data.count si quisieras validar el final) -->
+    <footer class="flex justify-center gap-4 mt-10 pb-10">
+
+        <button
+          class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition disabled:opacity-40"
+          (click)="prevPage()"
+          [disabled]="offset() === 0">
+          Anterior
+        </button>
+
+        <button
+          class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition disabled:opacity-40"
+          (click)="nextPage()"
+          [disabled]="offset() + limit >= data.count"> <!-- Agregado disabled lógico -->
+          Siguiente
+        </button>
+
+    </footer>
   }
-
-
-  <!-- CONTROLES DE PÁGINA -->
-  <footer class="flex justify-center gap-4 mt-10">
-
-    <button 
-      class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition disabled:opacity-40"
-      (click)="prevPage()"
-      [disabled]="offset() === 0">
-      Anterior
-    </button>
-
-    <button 
-      class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-      (click)="nextPage()">
-      Siguiente
-    </button>
-
-  </footer>
 
 </section>
